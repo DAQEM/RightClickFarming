@@ -1,6 +1,30 @@
 hoe-required: false
 
 wheat:
+  enabled: true
+  wheat-drop-amount: 1
   seed-drops: true
   min-seed-drops: 0
   max-seed-drops: 3
+
+carrot:
+  enabled: true
+  min-drops: 1
+  max-drops: 3
+
+potato:
+  enabled: true
+  min-drops: 1
+  max-drops: 3
+
+beetroot:
+  enabled: true
+  beetroot-drop-amount: 1
+  seed-drops: true
+  min-seed-drops: 0
+  max-seed-drops: 3
+
+neterwart:
+  enabled: true
+  min-drops: 1
+  max-drops: 3

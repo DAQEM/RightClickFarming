@@ -20,7 +20,7 @@ public class PlayerInteractListener implements Listener {
     public PlayerInteractListener(RightClickFarming pl) {
         this.plugin = pl;
         this.breakCrops = new BreakCrops(plugin);
-        this.plantSeeds = new PlantSeeds();
+        this.plantSeeds = new PlantSeeds(plugin);
     }
 
     @EventHandler
@@ -36,7 +36,6 @@ public class PlayerInteractListener implements Listener {
                 if (mainHand == Material.WOODEN_HOE || mainHand == Material.STONE_HOE || mainHand == Material.IRON_HOE || mainHand == Material.GOLDEN_HOE || mainHand == Material.DIAMOND_HOE) {
                     player.sendMessage("Hoe in hand");
                     breakCrops.breakCrops(block, player);
-                    plantSeeds.plantSeeds("Wheat", block.getLocation().getBlock());
                 }
 
             } else {
