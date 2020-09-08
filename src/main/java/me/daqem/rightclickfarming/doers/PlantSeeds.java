@@ -1,17 +1,9 @@
 package me.daqem.rightclickfarming.doers;
 
-import me.daqem.rightclickfarming.RightClickFarming;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 public class PlantSeeds {
-
-    private final RightClickFarming plugin;
-
-    public PlantSeeds(RightClickFarming pl) {
-        this.plugin = pl;
-    }
 
     public void plantSeeds(String crop, Block block) {
         Block blockLoc = block.getLocation().getBlock();

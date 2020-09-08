@@ -19,7 +19,7 @@ public class BreakCrops {
         this.plugin = pl;
         this.fullyGrownChecker = new FullyGrownChecker();
         this.dropMath = new DropMath();
-        this.plantSeeds = new PlantSeeds(plugin);
+        this.plantSeeds = new PlantSeeds();
     }
 
     public void breakCrops(Block block, Player player) {
@@ -54,6 +54,14 @@ public class BreakCrops {
 
                 }
             }
+            else if (block.getType() == Material.NETHER_WART && plugin.getConfig().getBoolean("netherwart.enabled")) {
+                block.setType(Material.AIR);
+                plantSeeds.plantSeeds("Nether Wart", block);
+                player.getInventory().addItem(new ItemStack(Material.NETHER_WART, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("netherwart.min-drops"), plugin.getConfig().getInt("netherwart.max-drops"))));
+
+            }
+        } else {
+            player.sendMessage("NOT A KNOW CROP YET.");
         }
     }
 }

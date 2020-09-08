@@ -24,7 +24,7 @@ beetroot:
   min-seed-drops: 0
   max-seed-drops: 3
 
-neterwart:
+netherwart:
   enabled: true
   min-drops: 1
   max-drops: 3
