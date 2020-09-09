@@ -5,14 +5,10 @@ import me.daqem.rightclickfarming.checkers.FullyGrownChecker;
 import me.daqem.rightclickfarming.utils.BambooStack;
 import me.daqem.rightclickfarming.utils.CaneStack;
 import me.daqem.rightclickfarming.utils.DropMath;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Collection;
 
 public class BreakCrops {
 
@@ -28,8 +24,8 @@ public class BreakCrops {
         this.fullyGrownChecker = new FullyGrownChecker();
         this.dropMath = new DropMath();
         this.plantSeeds = new PlantSeeds();
-        this.caneStack = new CaneStack();
-        this.bambooStack = new BambooStack();
+        this.caneStack = new CaneStack(plugin);
+        this.bambooStack = new BambooStack(plugin);
 
     }
 
@@ -55,7 +51,12 @@ public class BreakCrops {
                 block.setType(Material.AIR);
                 plantSeeds.plantSeeds("Potato", block);
                 player.getInventory().addItem(new ItemStack(Material.POTATO, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("potato.min-drops"), plugin.getConfig().getInt("potato.max-drops"))));
-
+                if (plugin.getConfig().getBoolean("potato.poisonous-potato.enabled")) {
+                    int percentage = dropMath.getRandomNumberInRange(0, 100);
+                    if (percentage <= plugin.getConfig().getInt("potato.poisonous-potato.drop-percentage")) {
+                        player.getInventory().addItem(new ItemStack(Material.POISONOUS_POTATO, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("potato.poisonous-potato.min-drops"), plugin.getConfig().getInt("potato.poisonous-potato.max-drops"))));
+                    }
+                }
             }
             else if (material == Material.BEETROOTS && plugin.getConfig().getBoolean("beetroot.enabled")) {
                 block.setType(Material.AIR);
@@ -72,9 +73,9 @@ public class BreakCrops {
                 player.getInventory().addItem(new ItemStack(Material.NETHER_WART, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("netherwart.min-drops"), plugin.getConfig().getInt("netherwart.max-drops"))));
 
             }
-        } else if (material == Material.SUGAR_CANE) {
+        } else if (material == Material.SUGAR_CANE && plugin.getConfig().getBoolean("sugarcane.enabled")) {
             caneStack.caneStack(player, block);
-        } else if (material == Material.BAMBOO) {
+        } else if (material == Material.BAMBOO && plugin.getConfig().getBoolean("bamboo.enabled")) {
             bambooStack.bambooStack(player, block);
         } else {
             player.sendMessage("NOT A KNOW CROP YET.");

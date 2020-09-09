@@ -1,11 +1,21 @@
 package me.daqem.rightclickfarming.utils;
 
+import me.daqem.rightclickfarming.RightClickFarming;
+import me.daqem.rightclickfarming.checkers.FullyGrownChecker;
+import me.daqem.rightclickfarming.doers.PlantSeeds;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class CaneStack {
+
+    private final RightClickFarming plugin;
+
+    public CaneStack(RightClickFarming pl) {
+        this.plugin = pl;
+
+    }
 
     public void caneStack(Player player, Block block) {
         Material material = block.getType();
@@ -22,7 +32,7 @@ public class CaneStack {
             material = block.getType();
             if (i == caneAmount) {
                 block.setType(Material.AIR);
-                player.getInventory().addItem(new ItemStack(Material.SUGAR_CANE, caneAmount + 1));
+                player.getInventory().addItem(new ItemStack(Material.SUGAR_CANE, (caneAmount + 1) * plugin.getConfig().getInt("sugarcane.multiplier")));
                 return;
             }
             if (material == Material.SUGAR_CANE) {

@@ -16,6 +16,11 @@ potato:
   enabled: true
   min-drops: 1
   max-drops: 3
+  poisonous-potato:
+    enabled: true
+    drop-percentage: 4
+    min-drops: 0
+    max-drops: 1
 
 beetroot:
   enabled: true
@@ -28,3 +33,11 @@ netherwart:
   enabled: true
   min-drops: 1
   max-drops: 3
+
+sugarcane:
+  enabled: true
+  multiplier: 1
+
+bamboo:
+  enabled: true
+  multiplier: 1
