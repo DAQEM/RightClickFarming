@@ -38,7 +38,9 @@ public class PlayerInteractListener implements Listener {
                 }
 
             } else {
-                event.setCancelled(true);
+                if (block.getType() == Material.SUGAR_CANE || block.getType() == Material.BAMBOO) {
+                    event.setCancelled(true);
+                }
                 breakCrops.breakCrops(block, player);
             }
         }

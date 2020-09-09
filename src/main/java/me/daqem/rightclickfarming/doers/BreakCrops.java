@@ -77,6 +77,12 @@ public class BreakCrops {
             caneStack.caneStack(player, block);
         } else if (material == Material.BAMBOO && plugin.getConfig().getBoolean("bamboo.enabled")) {
             bambooStack.bambooStack(player, block);
+        } else if (material == Material.MELON && plugin.getConfig().getBoolean("melon.enabled")) {
+            block.setType(Material.AIR);
+            player.getInventory().addItem(new ItemStack(Material.MELON_SLICE, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("melon.min-drops"), plugin.getConfig().getInt("melon.max-drops"))));
+        } else if (material == Material.PUMPKIN && plugin.getConfig().getBoolean("pumpkin.enabled")) {
+            block.setType(Material.AIR);
+            player.getInventory().addItem(new ItemStack(Material.PUMPKIN, plugin.getConfig().getInt("pumpkin.pumpkin-drop-amount")));
         } else {
             player.sendMessage("NOT A KNOW CROP YET.");
         }

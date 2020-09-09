@@ -41,3 +41,12 @@ sugarcane:
 bamboo:
   enabled: true
   multiplier: 1
+
+melon:
+  enabled: true
+  min-drops: 3
+  max-drops: 7
+
+pumpkin:
+  enabled: true
+  pumpkin-drop-amount: 1
