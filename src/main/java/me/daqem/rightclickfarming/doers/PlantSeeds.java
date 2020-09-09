@@ -2,6 +2,10 @@ package me.daqem.rightclickfarming.doers;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.type.Cocoa;
+import org.bukkit.material.CocoaPlant;
+import org.bukkit.material.Directional;
 
 public class PlantSeeds {
 

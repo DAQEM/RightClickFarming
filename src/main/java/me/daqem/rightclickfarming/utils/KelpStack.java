@@ -1,29 +1,26 @@
 package me.daqem.rightclickfarming.utils;
 
 import me.daqem.rightclickfarming.RightClickFarming;
-import me.daqem.rightclickfarming.checkers.FullyGrownChecker;
-import me.daqem.rightclickfarming.doers.PlantSeeds;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class CaneStack {
+public class KelpStack {
 
     private final RightClickFarming plugin;
 
-    public CaneStack(RightClickFarming pl) {
+    public KelpStack(RightClickFarming pl) {
         this.plugin = pl;
 
     }
-
-    public void caneStack(Player player, Block block) {
+    public void kelpStack(Player player, Block block) {
         Material material = block.getType();
         int caneAmount = 0;
-        while (material == Material.SUGAR_CANE) {
+        while (material == Material.KELP_PLANT || material == Material.KELP) {
             block = block.getRelative(0, 1, 0);
             material = block.getType();
-            if (material == Material.SUGAR_CANE) {
+            if (material == Material.KELP_PLANT || material == Material.KELP) {
                 caneAmount++;
             }
         }
@@ -31,12 +28,12 @@ public class CaneStack {
             block = block.getRelative(0, -1, 0);
             material = block.getType();
             if (i == caneAmount) {
-                block.setType(Material.AIR);
-                player.getInventory().addItem(new ItemStack(Material.SUGAR_CANE, (caneAmount + 1) * plugin.getConfig().getInt("sugarcane.multiplier")));
+                block.setType(Material.WATER);
+                player.getInventory().addItem(new ItemStack(Material.KELP, (caneAmount + 1) * plugin.getConfig().getInt("kelp.multiplier")));
                 return;
             }
-            if (material == Material.SUGAR_CANE) {
-                block.setType(Material.AIR);
+            if (material == Material.KELP_PLANT || material == Material.KELP) {
+                block.setType(Material.WATER);
             }
         }
     }

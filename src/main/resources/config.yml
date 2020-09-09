@@ -38,7 +38,15 @@ sugarcane:
   enabled: true
   multiplier: 1
 
+cactus:
+  enabled: true
+  multiplier: 1
+
 bamboo:
+  enabled: true
+  multiplier: 1
+
+kelp:
   enabled: true
   multiplier: 1
 
@@ -50,3 +58,8 @@ melon:
 pumpkin:
   enabled: true
   pumpkin-drop-amount: 1
+
+cocoabeans:
+  enabled: true
+  min-drops: 3
+  max-drops: 7

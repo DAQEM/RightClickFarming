@@ -4,28 +4,23 @@ import org.bukkit.CropState;
 import org.bukkit.Material;
 import org.bukkit.NetherWartsState;
 import org.bukkit.block.Block;
+import org.bukkit.material.CocoaPlant;
 import org.bukkit.material.Crops;
 import org.bukkit.material.MaterialData;
 import org.bukkit.material.NetherWarts;
 
 public class FullyGrownChecker {
 
-    public boolean isFullyGrown(Block block) {
-        if (block.getType() == Material.WHEAT ||
-                block.getType() == Material.CARROTS ||
-                block.getType() == Material.POTATOES ||
-                block.getType() == Material.BEETROOTS ||
-                block.getType() == Material.NETHER_WART) {
-            MaterialData materialData = block.getState().getData();
+    public boolean crops(Block block) {
+        MaterialData materialData = block.getState().getData();
 
-            if (materialData instanceof Crops) {
-                return (((Crops) materialData).getState() == CropState.RIPE);
-            } else if (materialData instanceof NetherWarts) {
-                NetherWarts netherWarts = (NetherWarts)materialData;
-                return netherWarts.getState() == NetherWartsState.RIPE;
-            } else return false;
-
-        }
-        return false;
+        if (materialData instanceof Crops) {
+            return (((Crops) materialData).getState() == CropState.RIPE);
+        } else if (materialData instanceof NetherWarts) {
+            NetherWarts netherWarts = (NetherWarts) materialData;
+            return netherWarts.getState() == NetherWartsState.RIPE;
+        } else if (materialData instanceof CocoaPlant) {
+            return ((CocoaPlant) materialData).getSize() == CocoaPlant.CocoaPlantSize.LARGE;
+        } else return false;
     }
 }
