@@ -38,6 +38,7 @@ public class PlayerInteractListener implements Listener {
                 }
 
             } else {
+                event.setCancelled(true);
                 breakCrops.breakCrops(block, player);
             }
         }

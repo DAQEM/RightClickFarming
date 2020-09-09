@@ -2,11 +2,17 @@ package me.daqem.rightclickfarming.doers;
 
 import me.daqem.rightclickfarming.RightClickFarming;
 import me.daqem.rightclickfarming.checkers.FullyGrownChecker;
+import me.daqem.rightclickfarming.utils.BambooStack;
+import me.daqem.rightclickfarming.utils.CaneStack;
 import me.daqem.rightclickfarming.utils.DropMath;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Collection;
 
 public class BreakCrops {
 
@@ -14,17 +20,23 @@ public class BreakCrops {
     private final FullyGrownChecker fullyGrownChecker;
     private final DropMath dropMath;
     private final PlantSeeds plantSeeds;
+    private final CaneStack caneStack;
+    private final BambooStack bambooStack;
 
     public BreakCrops(RightClickFarming pl) {
         this.plugin = pl;
         this.fullyGrownChecker = new FullyGrownChecker();
         this.dropMath = new DropMath();
         this.plantSeeds = new PlantSeeds();
+        this.caneStack = new CaneStack();
+        this.bambooStack = new BambooStack();
+
     }
 
     public void breakCrops(Block block, Player player) {
+        Material material = block.getType();
         if (fullyGrownChecker.isFullyGrown(block)) {
-            if (block.getType() == Material.WHEAT && plugin.getConfig().getBoolean("wheat.enabled")) {
+            if (material == Material.WHEAT && plugin.getConfig().getBoolean("wheat.enabled")) {
                 block.setType(Material.AIR);
                 plantSeeds.plantSeeds("Wheat", block);
                 player.getInventory().addItem(new ItemStack(Material.WHEAT, plugin.getConfig().getInt("wheat.wheat-drop-amount")));
@@ -33,19 +45,19 @@ public class BreakCrops {
 
                 }
             }
-            else if (block.getType() == Material.CARROT && plugin.getConfig().getBoolean("carrot.enabled")) {
+            else if (material == Material.CARROT && plugin.getConfig().getBoolean("carrot.enabled")) {
                 block.setType(Material.AIR);
                 plantSeeds.plantSeeds("Carrot", block);
                 player.getInventory().addItem(new ItemStack(Material.CARROT, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("carrot.min-drops"), plugin.getConfig().getInt("carrot.max-drops"))));
 
             }
-            else if (block.getType() == Material.POTATOES && plugin.getConfig().getBoolean("potato.enabled")) {
+            else if (material == Material.POTATOES && plugin.getConfig().getBoolean("potato.enabled")) {
                 block.setType(Material.AIR);
                 plantSeeds.plantSeeds("Potato", block);
                 player.getInventory().addItem(new ItemStack(Material.POTATO, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("potato.min-drops"), plugin.getConfig().getInt("potato.max-drops"))));
 
             }
-            else if (block.getType() == Material.BEETROOTS && plugin.getConfig().getBoolean("beetroot.enabled")) {
+            else if (material == Material.BEETROOTS && plugin.getConfig().getBoolean("beetroot.enabled")) {
                 block.setType(Material.AIR);
                 plantSeeds.plantSeeds("Beetroot", block);
                 player.getInventory().addItem(new ItemStack(Material.BEETROOT, plugin.getConfig().getInt("beetroot.beetroot-drop-amount")));
@@ -54,12 +66,16 @@ public class BreakCrops {
 
                 }
             }
-            else if (block.getType() == Material.NETHER_WART && plugin.getConfig().getBoolean("netherwart.enabled")) {
+            else if (material == Material.NETHER_WART && plugin.getConfig().getBoolean("netherwart.enabled")) {
                 block.setType(Material.AIR);
                 plantSeeds.plantSeeds("Nether Wart", block);
                 player.getInventory().addItem(new ItemStack(Material.NETHER_WART, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("netherwart.min-drops"), plugin.getConfig().getInt("netherwart.max-drops"))));
 
             }
+        } else if (material == Material.SUGAR_CANE) {
+            caneStack.caneStack(player, block);
+        } else if (material == Material.BAMBOO) {
+            bambooStack.bambooStack(player, block);
         } else {
             player.sendMessage("NOT A KNOW CROP YET.");
         }
