@@ -3,14 +3,19 @@ package me.daqem.rightclickfarming.doers;
 import me.daqem.rightclickfarming.RightClickFarming;
 import me.daqem.rightclickfarming.checkers.FullyGrownChecker;
 import me.daqem.rightclickfarming.utils.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.CocoaPlant;
 import org.bukkit.material.MaterialData;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class BreakCrops {
 
@@ -37,12 +42,13 @@ public class BreakCrops {
 
     public void breakCrops(Block block, Player player) {
         Material material = block.getType();
-        if (block.getType() == Material.WHEAT ||
-                block.getType() == Material.CARROTS ||
-                block.getType() == Material.POTATOES ||
-                block.getType() == Material.BEETROOTS ||
-                block.getType() == Material.NETHER_WART ||
-                block.getType() == Material.COCOA) {
+        if (material == Material.WHEAT ||
+                material == Material.CARROTS ||
+                material == Material.POTATOES ||
+                material == Material.BEETROOTS ||
+                material == Material.NETHER_WART ||
+                material == Material.COCOA ||
+                material == Material.SWEET_BERRY_BUSH) {
             if (fullyGrownChecker.crops(block)) {
                 if (material == Material.WHEAT && plugin.getConfig().getBoolean("wheat.enabled")) {
                     block.setType(Material.AIR);
@@ -88,6 +94,17 @@ public class BreakCrops {
                     blockState.setData(cocoaPlant);
                     blockState.update();
                     player.getInventory().addItem(new ItemStack(Material.COCOA_BEANS, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("cocoabeans.min-drops"), plugin.getConfig().getInt("cocoabeans.max-drops"))));
+                } else if (material == Material.SWEET_BERRY_BUSH && plugin.getConfig().getBoolean("sweetberries.enabled")) {
+                    Ageable ageable = (Ageable) block.getState().getBlockData();
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                        if (ageable.getAge() == 2) {
+                            player.getInventory().addItem(new ItemStack(Material.SWEET_BERRIES, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("sweetberries.half-grown.min-drops"), plugin.getConfig().getInt("sweetberries.half-grown.max-drops"))));
+                        } else {
+                            player.getInventory().addItem(new ItemStack(Material.SWEET_BERRIES, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("sweetberries.fully-grown.min-drops"), plugin.getConfig().getInt("sweetberries.fully-grown.max-drops"))));
+                        }
+                        ageable.setAge(ageable.getAge() - 2);
+                        block.setBlockData(ageable);
+                    }, 1L);
                 }
             }
         } else if (material == Material.SUGAR_CANE && plugin.getConfig().getBoolean("sugarcane.enabled")) {
@@ -104,8 +121,6 @@ public class BreakCrops {
         } else if (material == Material.PUMPKIN && plugin.getConfig().getBoolean("pumpkin.enabled")) {
             block.setType(Material.AIR);
             player.getInventory().addItem(new ItemStack(Material.PUMPKIN, plugin.getConfig().getInt("pumpkin.pumpkin-drop-amount")));
-        } else {
-            player.sendMessage("NOT A KNOW CROP YET.");
         }
     }
 }

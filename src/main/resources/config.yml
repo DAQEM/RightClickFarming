@@ -63,3 +63,12 @@ cocoabeans:
   enabled: true
   min-drops: 3
   max-drops: 7
+
+sweetberries:
+  enabled: true
+  fully-grown:
+    min-drops: 1
+    max-drops: 2
+  half-grown:
+    min-drops: 1
+    max-drops: 2

@@ -1,5 +1,6 @@
 package me.daqem.rightclickfarming.doers;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -25,6 +26,10 @@ public class PlantSeeds {
         }
         if (crop.equals("Nether Wart")) {
             blockLoc.setType(Material.NETHER_WART);
+        }
+        if (crop.equals("Berries")) {
+            blockLoc.setType(Material.SWEET_BERRY_BUSH);
+            Bukkit.broadcastMessage("SETTING");
         }
     }
 }

@@ -34,14 +34,13 @@ public class PlayerInteractListener implements Listener {
             if (plugin.getConfig().getBoolean("hoe-required")) {
                 Material mainHand = player.getInventory().getItemInMainHand().getType();
                 if (mainHand == Material.WOODEN_HOE || mainHand == Material.STONE_HOE || mainHand == Material.IRON_HOE || mainHand == Material.GOLDEN_HOE || mainHand == Material.DIAMOND_HOE) {
-                    player.sendMessage("Hoe in hand");
                     breakCrops.breakCrops(block, player);
                 }
             } else {
                 if (material == Material.SUGAR_CANE || material == Material.BAMBOO ||
                         material == Material.PUMPKIN || material == Material.MELON ||
                         material == Material.KELP || material == Material.KELP_PLANT ||
-                        material == Material.CACTUS){
+                        material == Material.CACTUS || material == Material.SWEET_BERRY_BUSH){
                     event.setCancelled(true);
                 }
                 breakCrops.breakCrops(block, player);
