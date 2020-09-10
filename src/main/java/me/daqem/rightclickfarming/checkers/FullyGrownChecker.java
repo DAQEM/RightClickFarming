@@ -14,14 +14,11 @@ public class FullyGrownChecker {
         if (blockData instanceof Ageable) {
             Ageable ageable = (Ageable) blockData;
             if (block.getType() == Material.SWEET_BERRY_BUSH) {
-                return ageable.getAge() >= ageable.getMaximumAge() || ageable.getAge() >= ageable.getMaximumAge()-1;
+                return ageable.getAge() >= ageable.getMaximumAge() || ageable.getAge() >= ageable.getMaximumAge() - 1;
             } else {
                 return ageable.getAge() >= ageable.getMaximumAge();
             }
-        } else {
-            Bukkit.broadcastMessage(ChatColor.RED + "No Instanceof.");
-            return false;
         }
+        return false;
     }
-
 }

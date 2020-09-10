@@ -5,3 +5,7 @@ api-version: 1.16
 authors: [DAQEM]
 description: Harverts crops and plant them back when you rightclick on them.
 website: https://daqem.com
+commands:
+  rightclickfarming:
+    description: Main command.
+    aliases: [rcf]
