@@ -15,30 +15,31 @@ public class MainCommand implements CommandExecutor {
     public MainCommand(RightClickFarming pl) {
         this.plugin = pl;
         this.reloadCommand = new ReloadCommand(plugin);
-        this.setCommand = new SetCommand();
-        this.helpCommand = new HelpCommand();
+        this.setCommand = new SetCommand(plugin);
+        this.helpCommand = new HelpCommand(plugin);
     }
 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            helpCommand.basicHelpCommand(sender);
+            helpCommand.helpCommand(sender, null);
         }
-        if (args[0].equalsIgnoreCase("reload")) {
-            if (args.length == 1) {
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("reload"))
                 reloadCommand.reloadCommand(sender);
-            } else {
-                helpCommand.basicHelpCommand(sender);
+            if (args[0].equalsIgnoreCase("set")) {
+                setCommand.setCommand(sender, args);
+            }
+            if (args[0].equalsIgnoreCase("help")) {
+                helpCommand.helpCommand(sender, null);
             }
         }
-        if (args[0].equalsIgnoreCase("set")) {
-            setCommand.setCommand(sender, args);
+        if (args.length == 2 || args.length == 3 || args.length == 4 || args.length == 5) {
+            if (args[0].equals("set")) {
+                setCommand.setCommand(sender, args);
+            }
         }
-        if (args[0].equalsIgnoreCase("help")) {
-            helpCommand.basicHelpCommand(sender);
-        }
-
         return false;
     }
 }
