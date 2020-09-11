@@ -3,7 +3,7 @@ hoe-required: false
 crops:
   wheat:
     enabled: true
-    wheat-drop-amount: 1
+    multiplier: 1
     seed-drops: true
     min-seed-drops: 0
     max-seed-drops: 3
@@ -25,7 +25,7 @@ crops:
 
   beetroot:
     enabled: true
-    beetroot-drop-amount: 1
+    multiplier: 1
     seed-drops: true
     min-seed-drops: 0
     max-seed-drops: 3
@@ -58,7 +58,7 @@ crops:
 
   pumpkin:
     enabled: true
-    pumpkin-drop-amount: 1
+    multiplier: 1
 
   cocoabeans:
     enabled: true

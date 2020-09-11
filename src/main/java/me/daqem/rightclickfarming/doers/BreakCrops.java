@@ -49,7 +49,7 @@ public class BreakCrops {
                 if (material == Material.WHEAT && plugin.getConfig().getBoolean("crops.wheat.enabled")) {
                     block.setType(Material.AIR);
                     plantSeeds.plantSeeds("Wheat", block);
-                    player.getInventory().addItem(new ItemStack(Material.WHEAT, plugin.getConfig().getInt("crops.wheat.wheat-drop-amount")));
+                    player.getInventory().addItem(new ItemStack(Material.WHEAT, plugin.getConfig().getInt("crops.multiplier")));
                     if (plugin.getConfig().getBoolean("crops.wheat.seed-drops")) {
                         player.getInventory().addItem(new ItemStack(Material.WHEAT_SEEDS, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.wheat.min-seed-drops"), plugin.getConfig().getInt("crops.wheat.max-seed-drops"))));
 
@@ -72,7 +72,7 @@ public class BreakCrops {
                 } else if (material == Material.BEETROOTS && plugin.getConfig().getBoolean("crops.beetroot.enabled")) {
                     block.setType(Material.AIR);
                     plantSeeds.plantSeeds("Beetroot", block);
-                    player.getInventory().addItem(new ItemStack(Material.BEETROOT, plugin.getConfig().getInt("beetroot.beetroot-drop-amount")));
+                    player.getInventory().addItem(new ItemStack(Material.BEETROOT, plugin.getConfig().getInt("beetroot.multiplier")));
                     if (plugin.getConfig().getBoolean("crops.beetroot.seed-drops")) {
                         player.getInventory().addItem(new ItemStack(Material.BEETROOT_SEEDS, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.beetroot.min-seed-drops"), plugin.getConfig().getInt("crops.beetroot.max-seed-drops"))));
 
@@ -116,7 +116,7 @@ public class BreakCrops {
             player.getInventory().addItem(new ItemStack(Material.MELON_SLICE, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.melon.min-drops"), plugin.getConfig().getInt("crops.melon.max-drops"))));
         } else if (material == Material.PUMPKIN && plugin.getConfig().getBoolean("crops.pumpkin.enabled")) {
             block.setType(Material.AIR);
-            player.getInventory().addItem(new ItemStack(Material.PUMPKIN, plugin.getConfig().getInt("crops.pumpkin.pumpkin-drop-amount")));
+            player.getInventory().addItem(new ItemStack(Material.PUMPKIN, plugin.getConfig().getInt("crops.pumpkin.multiplier")));
         }
     }
 }

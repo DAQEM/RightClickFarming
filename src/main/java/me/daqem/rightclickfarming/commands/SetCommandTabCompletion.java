@@ -23,7 +23,7 @@ public class SetCommandTabCompletion implements TabCompleter {
         booleans.add("false");
 
         List<String> integers;
-        integers = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9");
+        integers = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "etc.");
 
         if (args.length == 1) {
             List<String> subCommands = new ArrayList<>();
