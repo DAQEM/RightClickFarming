@@ -29,7 +29,7 @@ public class CactusStack {
             material = block.getType();
             if (i == caneAmount) {
                 block.setType(Material.AIR);
-                player.getInventory().addItem(new ItemStack(Material.CACTUS, (caneAmount + 1) * plugin.getConfig().getInt("cactus.multiplier")));
+                player.getInventory().addItem(new ItemStack(Material.CACTUS, (caneAmount + 1) * plugin.getConfig().getInt("crops.cactus.multiplier")));
                 return;
             }
             if (material == Material.CACTUS) {

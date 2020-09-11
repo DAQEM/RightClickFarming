@@ -3,6 +3,8 @@ package me.daqem.rightclickfarming.commands;
 import me.daqem.rightclickfarming.RightClickFarming;
 import org.bukkit.command.CommandSender;
 
+import java.util.Objects;
+
 public class ReloadCommand {
 
     private final RightClickFarming plugin;

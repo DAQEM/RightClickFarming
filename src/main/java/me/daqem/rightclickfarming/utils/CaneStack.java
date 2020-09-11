@@ -32,7 +32,7 @@ public class CaneStack {
             material = block.getType();
             if (i == caneAmount) {
                 block.setType(Material.AIR);
-                player.getInventory().addItem(new ItemStack(Material.SUGAR_CANE, (caneAmount + 1) * plugin.getConfig().getInt("sugarcane.multiplier")));
+                player.getInventory().addItem(new ItemStack(Material.SUGAR_CANE, (caneAmount + 1) * plugin.getConfig().getInt("crops.sugarcane.multiplier")));
                 return;
             }
             if (material == Material.SUGAR_CANE) {

@@ -1,74 +1,75 @@
 hoe-required: false
 
-wheat:
-  enabled: true
-  wheat-drop-amount: 1
-  seed-drops: true
-  min-seed-drops: 0
-  max-seed-drops: 3
-
-carrot:
-  enabled: true
-  min-drops: 1
-  max-drops: 3
-
-potato:
-  enabled: true
-  min-drops: 1
-  max-drops: 3
-  poisonous-potato:
+crops:
+  wheat:
     enabled: true
-    drop-percentage: 4
-    min-drops: 0
-    max-drops: 1
+    wheat-drop-amount: 1
+    seed-drops: true
+    min-seed-drops: 0
+    max-seed-drops: 3
 
-beetroot:
-  enabled: true
-  beetroot-drop-amount: 1
-  seed-drops: true
-  min-seed-drops: 0
-  max-seed-drops: 3
-
-netherwart:
-  enabled: true
-  min-drops: 1
-  max-drops: 3
-
-sugarcane:
-  enabled: true
-  multiplier: 1
-
-cactus:
-  enabled: true
-  multiplier: 1
-
-bamboo:
-  enabled: true
-  multiplier: 1
-
-kelp:
-  enabled: true
-  multiplier: 1
-
-melon:
-  enabled: true
-  min-drops: 3
-  max-drops: 7
-
-pumpkin:
-  enabled: true
-  pumpkin-drop-amount: 1
-
-cocoabeans:
-  enabled: true
-  min-drops: 3
-  max-drops: 7
-
-sweetberries:
-  enabled: true
-  fully-grown:
+  carrot:
+    enabled: true
     min-drops: 1
-    max-drops: 2
-  half-grown:
+    max-drops: 3
+
+  potato:
+    enabled: true
     min-drops: 1
-    max-drops: 2
+    max-drops: 3
+    poisonous-potato:
+      enabled: true
+      drop-percentage: 4
+      min-drops: 0
+      max-drops: 1
+
+  beetroot:
+    enabled: true
+    beetroot-drop-amount: 1
+    seed-drops: true
+    min-seed-drops: 0
+    max-seed-drops: 3
+
+  netherwart:
+    enabled: true
+    min-drops: 1
+    max-drops: 3
+
+  sugarcane:
+    enabled: true
+    multiplier: 1
+
+  cactus:
+    enabled: true
+    multiplier: 1
+
+  bamboo:
+    enabled: true
+    multiplier: 1
+
+  kelp:
+    enabled: true
+    multiplier: 1
+
+  melon:
+    enabled: true
+    min-drops: 3
+    max-drops: 7
+
+  pumpkin:
+    enabled: true
+    pumpkin-drop-amount: 1
+
+  cocoabeans:
+    enabled: true
+    min-drops: 3
+    max-drops: 7
+
+  sweetberries:
+    enabled: true
+    fully-grown:
+      min-drops: 1
+      max-drops: 2
+    half-grown:
+      min-drops: 1
+      max-drops: 2

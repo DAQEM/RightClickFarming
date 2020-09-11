@@ -30,7 +30,7 @@ public class BambooStack {
             material = block.getType();
             if (i == bambooAmount) {
                 block.setType(Material.AIR);
-                player.getInventory().addItem(new ItemStack(Material.BAMBOO, (bambooAmount + 1) * plugin.getConfig().getInt("bamboo.multiplier")));
+                player.getInventory().addItem(new ItemStack(Material.BAMBOO, (bambooAmount + 1) * plugin.getConfig().getInt("crops.bamboo.multiplier")));
                 return;
             }
             if (material == Material.BAMBOO) {

@@ -29,7 +29,7 @@ public class KelpStack {
             material = block.getType();
             if (i == caneAmount) {
                 block.setType(Material.WATER);
-                player.getInventory().addItem(new ItemStack(Material.KELP, (caneAmount + 1) * plugin.getConfig().getInt("kelp.multiplier")));
+                player.getInventory().addItem(new ItemStack(Material.KELP, (caneAmount + 1) * plugin.getConfig().getInt("crops.kelp.multiplier")));
                 return;
             }
             if (material == Material.KELP_PLANT || material == Material.KELP) {

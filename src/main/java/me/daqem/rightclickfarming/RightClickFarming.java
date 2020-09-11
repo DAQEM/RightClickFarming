@@ -1,6 +1,7 @@
 package me.daqem.rightclickfarming;
 
 import me.daqem.rightclickfarming.commands.MainCommand;
+import me.daqem.rightclickfarming.commands.SetCommandTabCompletion;
 import me.daqem.rightclickfarming.listeners.PlayerInteractListener;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,6 +21,7 @@ public final class RightClickFarming extends JavaPlugin {
 
     public void registerCommands() {
         getCommand("rightclickfarming").setExecutor(new MainCommand(this));
+        getCommand("rightclickfarming").setTabCompleter(new SetCommandTabCompletion(this));
     }
 
     public void loadConfig() {

@@ -9,23 +9,36 @@ public class MainCommand implements CommandExecutor {
 
     private final RightClickFarming plugin;
     private final ReloadCommand reloadCommand;
+    private final SetCommand setCommand;
+    private final HelpCommand helpCommand;
 
     public MainCommand(RightClickFarming pl) {
         this.plugin = pl;
         this.reloadCommand = new ReloadCommand(plugin);
+        this.setCommand = new SetCommand();
+        this.helpCommand = new HelpCommand();
     }
 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            //HELP COMMAND
+            helpCommand.basicHelpCommand(sender);
         }
-        if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("reload")) {
+        if (args[0].equalsIgnoreCase("reload")) {
+            if (args.length == 1) {
                 reloadCommand.reloadCommand(sender);
+            } else {
+                helpCommand.basicHelpCommand(sender);
             }
         }
+        if (args[0].equalsIgnoreCase("set")) {
+            setCommand.setCommand(sender, args);
+        }
+        if (args[0].equalsIgnoreCase("help")) {
+            helpCommand.basicHelpCommand(sender);
+        }
+
         return false;
     }
 }
