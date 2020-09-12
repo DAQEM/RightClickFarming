@@ -49,10 +49,9 @@ public class BreakCrops {
                 if (material == Material.WHEAT && plugin.getConfig().getBoolean("crops.wheat.enabled")) {
                     block.setType(Material.AIR);
                     plantSeeds.plantSeeds("Wheat", block);
-                    player.getInventory().addItem(new ItemStack(Material.WHEAT, plugin.getConfig().getInt("crops.multiplier")));
+                    player.getInventory().addItem(new ItemStack(Material.WHEAT, plugin.getConfig().getInt("crops.wheat.multiplier")));
                     if (plugin.getConfig().getBoolean("crops.wheat.seed-drops")) {
                         player.getInventory().addItem(new ItemStack(Material.WHEAT_SEEDS, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.wheat.min-seed-drops"), plugin.getConfig().getInt("crops.wheat.max-seed-drops"))));
-
                     }
                 } else if (material == Material.CARROTS && plugin.getConfig().getBoolean("crops.carrot.enabled")) {
                     block.setType(Material.AIR);
@@ -72,7 +71,7 @@ public class BreakCrops {
                 } else if (material == Material.BEETROOTS && plugin.getConfig().getBoolean("crops.beetroot.enabled")) {
                     block.setType(Material.AIR);
                     plantSeeds.plantSeeds("Beetroot", block);
-                    player.getInventory().addItem(new ItemStack(Material.BEETROOT, plugin.getConfig().getInt("beetroot.multiplier")));
+                    player.getInventory().addItem(new ItemStack(Material.BEETROOT, plugin.getConfig().getInt("crops.beetroot.multiplier")));
                     if (plugin.getConfig().getBoolean("crops.beetroot.seed-drops")) {
                         player.getInventory().addItem(new ItemStack(Material.BEETROOT_SEEDS, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.beetroot.min-seed-drops"), plugin.getConfig().getInt("crops.beetroot.max-seed-drops"))));
 

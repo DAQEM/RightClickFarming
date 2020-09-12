@@ -36,7 +36,7 @@ public class MainCommand implements CommandExecutor {
             }
         }
         if (args.length == 2 || args.length == 3 || args.length == 4 || args.length == 5) {
-            if (args[0].equals("set")) {
+            if (args[0].equalsIgnoreCase("set")) {
                 setCommand.setCommand(sender, args);
             }
         }

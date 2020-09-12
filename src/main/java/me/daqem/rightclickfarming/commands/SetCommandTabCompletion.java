@@ -25,6 +25,8 @@ public class SetCommandTabCompletion implements TabCompleter {
         List<String> integers;
         integers = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "etc.");
 
+        Set<String> setOfArgs1 = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("crops")).getKeys(false);
+
         if (args.length == 1) {
             List<String> subCommands = new ArrayList<>();
             subCommands.add("help");
@@ -34,14 +36,17 @@ public class SetCommandTabCompletion implements TabCompleter {
         }
         if (args.length == 2) {
             if (args[0].equals("set")) {
-                Set<String> setOfArgs1 = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("crops")).getKeys(false);
                 return new ArrayList<>(setOfArgs1);
             }
         }
         if (args.length == 3) {
             if (args[0].equals("set")) {
-                Set<String> setOfArgs2 = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("crops." + args[1])).getKeys(false);
-                return new ArrayList<>(setOfArgs2);
+                for (String string : setOfArgs1) {
+                    if (args[1].equals(string)) {
+                        Set<String> setOfArgs2 = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("crops." + args[1])).getKeys(false);
+                        return new ArrayList<>(setOfArgs2);
+                    }
+                }
             }
         }
         if (args.length == 4) {
