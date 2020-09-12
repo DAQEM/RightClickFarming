@@ -194,12 +194,64 @@ public class SetCommand {
                     helpCommand.helpCommand(sender, args[2].toLowerCase());
                 }
             } else if (args[1].equalsIgnoreCase("sweetberries")) {
-
+                if (integerCheck.isInteger(args[4])) {
+                    int args4 = Integer.parseInt(args[4]);
+                    if (args[2].equalsIgnoreCase("fully-grown")) {
+                        if (args[3].equalsIgnoreCase("min-drops")) {
+                            if (args4 > plugin.getConfig().getInt("crops.sweetberries.fully-grown.max-drops")) {
+                                et.STMTCS(sender, "&6RightClickFarming > &eThe minimum drops must be less than or equal to the maximum drops.");
+                                return;
+                            }
+                            plugin.getConfig().set("crops.sweetberries.fully-grown.min-drops", args4);
+                            et.STMTCS(sender, "&6RightClickFarming > &eMinimum drops for a fully grown sweet berry bush has been set to &6" + args4 + "&e.");
+                            plugin.saveConfig();
+                            plugin.reloadConfig();
+                        } else if (args[3].equalsIgnoreCase("max-drops")) {
+                            if (args4 < plugin.getConfig().getInt("crops.sweetberries.fully-grown.min-drops")) {
+                                et.STMTCS(sender, "&6RightClickFarming > &eThe maximum drops must be greater than or equal to the minimum drops.");
+                                return;
+                            }
+                            plugin.getConfig().set("crops.sweetberries.fully-grown.max-drops", args4);
+                            et.STMTCS(sender, "&6RightClickFarming > &eMaximum drops for a fully grown sweet berry bush has been set to &6" + args4 + "&e.");
+                            plugin.saveConfig();
+                            plugin.reloadConfig();
+                        } else {
+                            helpCommand.helpCommand(sender, args[1]);
+                        }
+                    } else if (args[2].equalsIgnoreCase("half-grown")) {
+                        if (args[3].equalsIgnoreCase("min-drops")) {
+                            if (args4 > plugin.getConfig().getInt("crops.sweetberries.half-grown.max-drops")) {
+                                et.STMTCS(sender, "&6RightClickFarming > &eThe minimum drops must be less than or equal to the maximum drops.");
+                                return;
+                            }
+                            plugin.getConfig().set("crops.sweetberries.half-grown.min-drops", args4);
+                            et.STMTCS(sender, "&6RightClickFarming > &eMinimum drops for a half grown sweet berry bush has been set to &6" + args4 + "&e.");
+                            plugin.saveConfig();
+                            plugin.reloadConfig();
+                        } else if (args[3].equalsIgnoreCase("max-drops")) {
+                            if (args4 < plugin.getConfig().getInt("crops.sweetberries.half-grown.min-drops")) {
+                                et.STMTCS(sender, "&6RightClickFarming > &eThe maximum drops must be greater than or equal to the minimum drops.");
+                                return;
+                            }
+                            plugin.getConfig().set("crops.sweetberries.half-grown.max-drops", args4);
+                            et.STMTCS(sender, "&6RightClickFarming > &eMaximum drops for a half grown sweet berry bush has been set to &6" + args4 + "&e.");
+                            plugin.saveConfig();
+                            plugin.reloadConfig();
+                        } else {
+                            helpCommand.helpCommand(sender, args[1]);
+                        }
+                    } else {
+                        helpCommand.helpCommand(sender, args[1]);
+                    }
+                } else {
+                    helpCommand.helpCommand(sender, args[1]);
+                }
             } else {
                 helpCommand.helpCommand(sender, "set");
             }
+        } else {
+            helpCommand.helpCommand(sender, "set");
         }
-
     }
 
     public void switchEnable(CommandSender sender, String[] args) {

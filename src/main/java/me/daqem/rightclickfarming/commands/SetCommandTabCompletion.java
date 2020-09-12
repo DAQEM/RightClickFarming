@@ -67,8 +67,13 @@ public class SetCommandTabCompletion implements TabCompleter {
         }
         if (args.length == 5) {
             if (args[0].equals("set")) {
-                if (args[1].equals("potato") && args[2].equals("poisonous-potato") && args[3].equals("enabled")) {
-                    return booleans;
+                if (args[1].equals("potato") && args[2].equals("poisonous-potato")) {
+                    if (args[3].equals("enabled")) {
+                        return booleans;
+                    }
+                    else if (args[3].equals("drop-percentage") || args[3].equals("min-drops") || args[3].equals("max-drops")) {
+                        return integers;
+                    }
                 }
                 else if (args[1].equals("sweetberries") && (args[2].equals("fully-grown") || args[2].equals("half-grown"))) {
                     return integers;
