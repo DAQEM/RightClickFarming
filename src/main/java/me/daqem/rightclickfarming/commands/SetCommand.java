@@ -38,6 +38,8 @@ public class SetCommand {
             for (String cropType : cropsArray) {
                 if (args[1].equals(cropType)) {
                     helpCommand.helpCommand(sender, cropType);
+                } else {
+                    helpCommand.helpCommand(sender, "set");
                 }
             }
         } else if (args.length == 4) {
@@ -121,15 +123,23 @@ public class SetCommand {
                             helpCommand.helpCommand(sender, args[1].toLowerCase());
                         }
                     } else if (args[1].equalsIgnoreCase("potato")) {
-                        if (args[2].equalsIgnoreCase("enabled")) {
+                        if ((args[3].equalsIgnoreCase("true") || args[3].equalsIgnoreCase("false")) && args[2].equalsIgnoreCase("enabled")) {
                             switchEnable(sender, args);
                         }
                     } else if (args[1].equalsIgnoreCase("sugarcane") || args[1].equalsIgnoreCase("cactus") || args[1].equalsIgnoreCase("bamboo") || args[1].equalsIgnoreCase("kelp") || args[1].equalsIgnoreCase("pumpkin")) {
-                        if (args[2].equalsIgnoreCase("enabled")) {
+                        if ((args[3].equalsIgnoreCase("true") || args[3].equalsIgnoreCase("false")) && args[2].equalsIgnoreCase("enabled")) {
                             switchEnable(sender, args);
+                        } else if (integerCheck.isInteger(args[3])) {
+                            int args3 = Integer.parseInt(args[3]);
+                            if (args[2].equalsIgnoreCase("multiplier")) {
+                                plugin.getConfig().set("crops." + args[1].toLowerCase() + ".multiplier", args3);
+                                et.STMTCS(sender, "&6RightClickFarming > &eMultiplier for " + args[1].toLowerCase() + " have been set to &6" + args3 + "&e.");
+                                plugin.saveConfig();
+                                plugin.reloadConfig();
+                            }
                         }
                     } else if (args[1].equalsIgnoreCase("sweetberries")) {
-                        if (args[2].equalsIgnoreCase("enabled")) {
+                        if ((args[3].equalsIgnoreCase("true") || args[3].equalsIgnoreCase("false")) && args[2].equalsIgnoreCase("enabled")) {
                             switchEnable(sender, args);
                         }
                     } else {
