@@ -46,15 +46,7 @@ public class SetCommand {
                     if (args[1].equalsIgnoreCase("wheat") || args[1].equalsIgnoreCase("beetroot")) {
                         if (args[3].equalsIgnoreCase("true") || args[3].equalsIgnoreCase("false")) {
                             if (args[2].equalsIgnoreCase("enabled")) {
-                                if (args[3].equals("true")) {
-                                    plugin.getConfig().set("crops." + args[1].toLowerCase() + ".enabled", true);
-                                    et.STMTCS(sender, "&6RightClickFarming > &e" + capitalizeLetter.capitalize(args[1].toLowerCase()) + " has been &aenabled&e.");
-                                } else {
-                                    plugin.getConfig().set("crops." + args[1].toLowerCase() + ".enabled", false);
-                                    et.STMTCS(sender, "&6RightClickFarming > &e" + capitalizeLetter.capitalize(args[1].toLowerCase()) + " has been &cdisabled&e.");
-                                }
-                                plugin.saveConfig();
-                                plugin.reloadConfig();
+                                switchEnable(sender, args);
                             } else if (args[2].equalsIgnoreCase("seed-drops")) {
                                 if (args[3].equals("true")) {
                                     plugin.getConfig().set("crops." + args[1].toLowerCase() + ".seed-drops", true);
@@ -68,8 +60,7 @@ public class SetCommand {
                             } else {
                                 helpCommand.helpCommand(sender, args[1].toLowerCase());
                             }
-                        }
-                        else if (integerCheck.isInteger(args[3])) {
+                        } else if (integerCheck.isInteger(args[3])) {
                             int args3 = Integer.parseInt(args[3]);
                             if (args[2].equalsIgnoreCase("multiplier")) {
                                 plugin.getConfig().set("crops." + args[1].toLowerCase() + ".multiplier", args3);
@@ -101,19 +92,60 @@ public class SetCommand {
                             helpCommand.helpCommand(sender, args[1].toLowerCase());
                         }
                     } else if (args[1].equalsIgnoreCase("carrot") || args[1].equalsIgnoreCase("netherwart") || args[1].equalsIgnoreCase("melon") || args[1].equalsIgnoreCase("cocoabeans")) {
-
+                        int args3 = Integer.parseInt(args[3]);
+                        if (args[2].equalsIgnoreCase("enabled")) {
+                            switchEnable(sender, args);
+                        } else if (args[2].equalsIgnoreCase("min-drops")) {
+                            if (args3 >= plugin.getConfig().getInt("crops." + args[1].toLowerCase() + ".max-drops")) {
+                                et.STMTCS(sender, "&6RightClickFarming > &eThe minimum drops must not be higher or equal to the maximum drops.");
+                                return;
+                            }
+                            plugin.getConfig().set("crops." + args[1].toLowerCase() + ".min-drops", args3);
+                            et.STMTCS(sender, "&6RightClickFarming > &eMinimum drops for " + args[1].toLowerCase() + " have been set to &6" + args3 + "&e.");
+                            plugin.saveConfig();
+                            plugin.reloadConfig();
+                        } else if (args[2].equalsIgnoreCase("max-drops")) {
+                            if (args3 <= plugin.getConfig().getInt("crops." + args[1].toLowerCase() + ".min-drops")) {
+                                et.STMTCS(sender, "&6RightClickFarming > &eThe maximum drops must not be lower or equal to the minimum drops.");
+                                return;
+                            }
+                            plugin.getConfig().set("crops." + args[1].toLowerCase() + ".max-drops", args3);
+                            et.STMTCS(sender, "&6RightClickFarming > &eMaximum drops for " + args[1].toLowerCase() + " have been set to &6" + args3 + "&e.");
+                            plugin.saveConfig();
+                            plugin.reloadConfig();
+                        } else {
+                            helpCommand.helpCommand(sender, args[1].toLowerCase());
+                        }
                     } else if (args[1].equalsIgnoreCase("potato")) {
-
+                        if (args[2].equalsIgnoreCase("enabled")) {
+                            switchEnable(sender, args);
+                        }
                     } else if (args[1].equalsIgnoreCase("sugarcane") || args[1].equalsIgnoreCase("cactus") || args[1].equalsIgnoreCase("bamboo") || args[1].equalsIgnoreCase("kelp") || args[1].equalsIgnoreCase("pumpkin")) {
-
+                        if (args[2].equalsIgnoreCase("enabled")) {
+                            switchEnable(sender, args);
+                        }
                     } else if (args[1].equalsIgnoreCase("sweetberries")) {
-
+                        if (args[2].equalsIgnoreCase("enabled")) {
+                            switchEnable(sender, args);
+                        }
                     } else {
                         helpCommand.helpCommand(sender, "set");
                     }
-                    //rcf set wheat enabled false
+
                 }
             }
         }
+    }
+
+    public void switchEnable(CommandSender sender, String[] args) {
+        if (args[3].equals("true")) {
+            plugin.getConfig().set("crops." + args[1].toLowerCase() + ".enabled", true);
+            et.STMTCS(sender, "&6RightClickFarming > &e" + capitalizeLetter.capitalize(args[1].toLowerCase()) + " has been &aenabled&e.");
+        } else {
+            plugin.getConfig().set("crops." + args[1].toLowerCase() + ".enabled", false);
+            et.STMTCS(sender, "&6RightClickFarming > &e" + capitalizeLetter.capitalize(args[1].toLowerCase()) + " has been &cdisabled&e.");
+        }
+        plugin.saveConfig();
+        plugin.reloadConfig();
     }
 }
