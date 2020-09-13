@@ -35,14 +35,18 @@ public class SetCommandTabCompletion implements TabCompleter {
             return subCommands;
         }
         if (args.length == 2) {
-            if (args[0].equals("set")) {
+            if (args[0].equalsIgnoreCase("set")) {
+                return new ArrayList<>(setOfArgs1);
+            }
+            if (args[0].equalsIgnoreCase("help")) {
+                setOfArgs1.add("poisonous-potato");
                 return new ArrayList<>(setOfArgs1);
             }
         }
         if (args.length == 3) {
-            if (args[0].equals("set")) {
+            if (args[0].equalsIgnoreCase("set")) {
                 for (String string : setOfArgs1) {
-                    if (args[1].equals(string)) {
+                    if (args[1].equalsIgnoreCase(string)) {
                         Set<String> setOfArgs2 = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("crops." + args[1])).getKeys(false);
                         return new ArrayList<>(setOfArgs2);
                     }
@@ -50,13 +54,13 @@ public class SetCommandTabCompletion implements TabCompleter {
             }
         }
         if (args.length == 4) {
-            if (args[0].equals("set")) {
-                if (args[2].equals("enabled") || args[2].equals("seed-drops")) {
+            if (args[0].equalsIgnoreCase("set")) {
+                if (args[2].equalsIgnoreCase("enabled") || args[2].equalsIgnoreCase("seed-drops")) {
                     return booleans;
-                } else if (args[2].equals("poisonous-potato")) {
+                } else if (args[2].equalsIgnoreCase("poisonous-potato")) {
                     Set<String> setOfArgsPotato = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("crops.potato.poisonous-potato")).getKeys(false);
                     return new ArrayList<>(setOfArgsPotato);
-                } else if (args[1].equals("sweetberries")) {
+                } else if (args[1].equalsIgnoreCase("sweetberries")) {
                     Set<String> setOfArgsSweetBerries = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("crops.sweetberries." + args[2])).getKeys(false);
                     return new ArrayList<>(setOfArgsSweetBerries);
                 } else {
@@ -66,16 +70,16 @@ public class SetCommandTabCompletion implements TabCompleter {
 
         }
         if (args.length == 5) {
-            if (args[0].equals("set")) {
-                if (args[1].equals("potato") && args[2].equals("poisonous-potato")) {
-                    if (args[3].equals("enabled")) {
+            if (args[0].equalsIgnoreCase("set")) {
+                if (args[1].equalsIgnoreCase("potato") && args[2].equalsIgnoreCase("poisonous-potato")) {
+                    if (args[3].equalsIgnoreCase("enabled")) {
                         return booleans;
                     }
-                    else if (args[3].equals("drop-percentage") || args[3].equals("min-drops") || args[3].equals("max-drops")) {
+                    else if (args[3].equalsIgnoreCase("drop-percentage") || args[3].equalsIgnoreCase("min-drops") || args[3].equalsIgnoreCase("max-drops")) {
                         return integers;
                     }
                 }
-                else if (args[1].equals("sweetberries") && (args[2].equals("fully-grown") || args[2].equals("half-grown"))) {
+                else if (args[1].equalsIgnoreCase("sweetberries") && (args[2].equalsIgnoreCase("fully-grown") || args[2].equalsIgnoreCase("half-grown"))) {
                     return integers;
                 }
             }

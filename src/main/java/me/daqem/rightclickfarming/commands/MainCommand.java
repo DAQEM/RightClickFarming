@@ -26,8 +26,9 @@ public class MainCommand implements CommandExecutor {
             helpCommand.helpCommand(sender, null);
         }
         if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("reload"))
+            if (args[0].equalsIgnoreCase("reload")) {
                 reloadCommand.reloadCommand(sender);
+            }
             if (args[0].equalsIgnoreCase("set")) {
                 setCommand.setCommand(sender, args);
             }
@@ -38,6 +39,11 @@ public class MainCommand implements CommandExecutor {
         if (args.length == 2 || args.length == 3 || args.length == 4 || args.length == 5) {
             if (args[0].equalsIgnoreCase("set")) {
                 setCommand.setCommand(sender, args);
+            }
+            if (args.length == 2) {
+                if (args[0].equalsIgnoreCase("help")) {
+                    helpCommand.helpCommand(sender, args[1].toLowerCase());
+                }
             }
         }
         return false;
