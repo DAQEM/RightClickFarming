@@ -133,6 +133,15 @@ public class HelpCommand {
             et.STMTCS(sender, "");
             et.STMTCS(sender, footer);
         }
+        else if (type.equals("settings")) {
+            et.STMTCS(sender, header);
+            et.STMTCS(sender, "");
+            et.STMTCS(sender, "&6Available commands:");
+            et.STMTCS(sender, "&e/rcf settings hoe-required [true/false]");
+            et.STMTCS(sender, "&7(Enable/disable the option to require a hoe to right-click farm a crop.)");
+            et.STMTCS(sender, "");
+            et.STMTCS(sender, footer);
+        }
     }
 
     public void enableMessage(CommandSender sender, String type) {

@@ -32,6 +32,7 @@ public class SetCommandTabCompletion implements TabCompleter {
             subCommands.add("help");
             subCommands.add("set");
             subCommands.add("reload");
+            subCommands.add("settings");
             return subCommands;
         }
         if (args.length == 2) {
@@ -42,6 +43,11 @@ public class SetCommandTabCompletion implements TabCompleter {
                 setOfArgs1.add("poisonous-potato");
                 return new ArrayList<>(setOfArgs1);
             }
+            if (args[0].equalsIgnoreCase("settings")) {
+                List<String> settingArray = new ArrayList<>();
+                settingArray.add("hoe-required");
+                return settingArray;
+            }
         }
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("set")) {
@@ -51,6 +57,9 @@ public class SetCommandTabCompletion implements TabCompleter {
                         return new ArrayList<>(setOfArgs2);
                     }
                 }
+            }
+            if (args[0].equalsIgnoreCase("settings") && args[1].equalsIgnoreCase("hoe-required")) {
+                return booleans;
             }
         }
         if (args.length == 4) {

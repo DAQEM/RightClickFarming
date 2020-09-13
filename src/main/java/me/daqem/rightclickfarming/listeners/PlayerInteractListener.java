@@ -33,7 +33,7 @@ public class PlayerInteractListener implements Listener {
             Material material = block.getType();
             if (plugin.getConfig().getBoolean("hoe-required")) {
                 Material mainHand = player.getInventory().getItemInMainHand().getType();
-                if (mainHand == Material.WOODEN_HOE || mainHand == Material.STONE_HOE || mainHand == Material.IRON_HOE || mainHand == Material.GOLDEN_HOE || mainHand == Material.DIAMOND_HOE) {
+                if (mainHand == Material.WOODEN_HOE || mainHand == Material.STONE_HOE || mainHand == Material.IRON_HOE || mainHand == Material.GOLDEN_HOE || mainHand == Material.DIAMOND_HOE || mainHand == Material.NETHERITE_HOE) {
                     breakCrops.breakCrops(block, player);
                 }
             } else {
