@@ -6,6 +6,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 public class KelpStack {
 
     private final RightClickFarming plugin;
@@ -16,20 +18,24 @@ public class KelpStack {
     }
     public void kelpStack(Player player, Block block) {
         Material material = block.getType();
-        int caneAmount = 0;
+        int kelpAmount = 0;
         while (material == Material.KELP_PLANT || material == Material.KELP) {
             block = block.getRelative(0, 1, 0);
             material = block.getType();
             if (material == Material.KELP_PLANT || material == Material.KELP) {
-                caneAmount++;
+                kelpAmount++;
             }
         }
-        for (int i = 0; i < caneAmount + 1; i++) {
+        for (int i = 0; i < kelpAmount + 1; i++) {
             block = block.getRelative(0, -1, 0);
             material = block.getType();
-            if (i == caneAmount) {
+            if (i == kelpAmount) {
                 block.setType(Material.WATER);
-                player.getInventory().addItem(new ItemStack(Material.KELP, (caneAmount + 1) * plugin.getConfig().getInt("crops.kelp.multiplier")));
+                if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                    Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.KELP, (kelpAmount + 1) * plugin.getConfig().getInt("crops.kelp.multiplier")));
+                } else {
+                    player.getInventory().addItem(new ItemStack(Material.KELP, (kelpAmount + 1) * plugin.getConfig().getInt("crops.kelp.multiplier")));
+                }
                 return;
             }
             if (material == Material.KELP_PLANT || material == Material.KELP) {

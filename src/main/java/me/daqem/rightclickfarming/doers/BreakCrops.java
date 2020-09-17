@@ -15,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.CocoaPlant;
 
+import java.util.Objects;
+
 public class BreakCrops {
 
     private final RightClickFarming plugin;
@@ -47,7 +49,7 @@ public class BreakCrops {
     public void breakCrops(Block block, Player player) {
         Material material = block.getType();
         if (itemStackDropChecker.itemStackDropChecker(block) != null) {
-            if (inventorySpaceChecker.getInventorySpace(player, itemStackDropChecker.itemStackDropChecker(block)) >= 1) {
+            if (inventorySpaceChecker.getInventorySpace(player, itemStackDropChecker.itemStackDropChecker(block)) >= 1 || plugin.getConfig().getBoolean("drop-items-on-ground")) {
                 if (material == Material.WHEAT ||
                         material == Material.CARROTS ||
                         material == Material.POTATOES ||
@@ -59,38 +61,88 @@ public class BreakCrops {
                         if (material == Material.WHEAT && plugin.getConfig().getBoolean("crops.wheat.enabled")) {
                             block.setType(Material.AIR);
                             plantSeeds.plantSeeds("Wheat", block);
-                            player.getInventory().addItem(new ItemStack(Material.WHEAT, plugin.getConfig().getInt("crops.wheat.multiplier")));
+                            if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                                Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.WHEAT, plugin.getConfig().getInt("crops.wheat.multiplier")));
+                            } else {
+                                player.getInventory().addItem(new ItemStack(Material.WHEAT, plugin.getConfig().getInt("crops.wheat.multiplier")));
+                            }
                             if (plugin.getConfig().getBoolean("crops.wheat.seed-drops")) {
-                                player.getInventory().addItem(new ItemStack(Material.WHEAT_SEEDS, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.wheat.min-seed-drops"), plugin.getConfig().getInt("crops.wheat.max-seed-drops"))));
+                                int amountOfSeeds = dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.wheat.min-seed-drops"), plugin.getConfig().getInt("crops.wheat.max-seed-drops"));
+                                if (amountOfSeeds != 0) {
+                                    if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                                        Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.WHEAT_SEEDS, amountOfSeeds));
+                                    } else {
+                                        player.getInventory().addItem(new ItemStack(Material.WHEAT_SEEDS, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.wheat.min-seed-drops"), plugin.getConfig().getInt("crops.wheat.max-seed-drops"))));
+                                    }
+                                }
                             }
                         } else if (material == Material.CARROTS && plugin.getConfig().getBoolean("crops.carrot.enabled")) {
                             block.setType(Material.AIR);
                             plantSeeds.plantSeeds("Carrot", block);
-                            player.getInventory().addItem(new ItemStack(Material.CARROT, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.carrot.min-drops"), plugin.getConfig().getInt("crops.carrot.max-drops"))));
-
+                            int dropAmount = dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.carrot.min-drops"), plugin.getConfig().getInt("crops.carrot.max-drops"));
+                            if (dropAmount != 0) {
+                                if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                                    Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.CARROT, dropAmount));
+                                } else {
+                                    player.getInventory().addItem(new ItemStack(Material.CARROT, dropAmount));
+                                }
+                            }
                         } else if (material == Material.POTATOES && plugin.getConfig().getBoolean("crops.potato.enabled")) {
                             block.setType(Material.AIR);
                             plantSeeds.plantSeeds("Potato", block);
-                            player.getInventory().addItem(new ItemStack(Material.POTATO, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.potato.min-drops"), plugin.getConfig().getInt("crops.potato.max-drops"))));
+                            int dropAmount = dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.potato.min-drops"), plugin.getConfig().getInt("crops.potato.max-drops"));
+                            if (dropAmount != 0) {
+                                if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                                    Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.POTATO, dropAmount));
+                                } else {
+                                    player.getInventory().addItem(new ItemStack(Material.POTATO, dropAmount));
+                                }
+                            }
                             if (plugin.getConfig().getBoolean("crops.potato.poisonous-potato.enabled")) {
                                 int percentage = dropMath.getRandomNumberInRange(0, 100);
                                 if (percentage <= plugin.getConfig().getInt("crops.potato.poisonous-potato.drop-percentage")) {
-                                    player.getInventory().addItem(new ItemStack(Material.POISONOUS_POTATO, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.potato.poisonous-potato.min-drops"), plugin.getConfig().getInt("crops.potato.poisonous-potato.max-drops"))));
+                                    int pPDropAmount = dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.potato.poisonous-potato.min-drops"), plugin.getConfig().getInt("crops.potato.poisonous-potato.max-drops"));
+                                    if (pPDropAmount != 0) {
+                                        if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                                            Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.POISONOUS_POTATO, pPDropAmount));
+                                        } else {
+                                            player.getInventory().addItem(new ItemStack(Material.POISONOUS_POTATO, pPDropAmount));
+                                        }
+                                    }
                                 }
                             }
                         } else if (material == Material.BEETROOTS && plugin.getConfig().getBoolean("crops.beetroot.enabled")) {
                             block.setType(Material.AIR);
                             plantSeeds.plantSeeds("Beetroot", block);
-                            player.getInventory().addItem(new ItemStack(Material.BEETROOT, plugin.getConfig().getInt("crops.beetroot.multiplier")));
+                            int dropAmount = plugin.getConfig().getInt("crops.beetroot.multiplier");
+                            if (dropAmount != 0) {
+                                if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                                    Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.BEETROOT, dropAmount));
+                                } else {
+                                    player.getInventory().addItem(new ItemStack(Material.BEETROOT, dropAmount));
+                                }
+                            }
                             if (plugin.getConfig().getBoolean("crops.beetroot.seed-drops")) {
-                                player.getInventory().addItem(new ItemStack(Material.BEETROOT_SEEDS, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.beetroot.min-seed-drops"), plugin.getConfig().getInt("crops.beetroot.max-seed-drops"))));
-
+                                int seedDropAmount = dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.beetroot.min-seed-drops"), plugin.getConfig().getInt("crops.beetroot.max-seed-drops"));
+                                if (seedDropAmount != 0) {
+                                    if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                                        Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.BEETROOT_SEEDS, seedDropAmount));
+                                    } else {
+                                        player.getInventory().addItem(new ItemStack(Material.BEETROOT_SEEDS, seedDropAmount));
+                                    }
+                                }
                             }
                         } else if (material == Material.NETHER_WART && plugin.getConfig().getBoolean("crops.netherwart.enabled")) {
                             block.setType(Material.AIR);
                             plantSeeds.plantSeeds("Nether Wart", block);
-                            player.getInventory().addItem(new ItemStack(Material.NETHER_WART, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.netherwart.min-drops"), plugin.getConfig().getInt("crops.netherwart.max-drops"))));
-
+                            int dropAmount = dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.netherwart.min-drops"), plugin.getConfig().getInt("crops.netherwart.max-drops"));
+                            if (dropAmount != 0) {
+                                if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                                    Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.NETHER_WART, dropAmount));
+                                } else {
+                                    player.getInventory().addItem(new ItemStack(Material.NETHER_WART, dropAmount));
+                                }
+                            }
                         } else if (material == Material.COCOA && plugin.getConfig().getBoolean("crops.cocoabeans.enabled")) {
                             final BlockFace face = ((CocoaPlant) block.getState().getData()).getFacing();
                             BlockState blockState = block.getState();
@@ -98,14 +150,35 @@ public class BreakCrops {
                             block.setType(material);
                             blockState.setData(cocoaPlant);
                             blockState.update();
-                            player.getInventory().addItem(new ItemStack(Material.COCOA_BEANS, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.cocoabeans.min-drops"), plugin.getConfig().getInt("crops.cocoabeans.max-drops"))));
+                            int dropAmount = dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.cocoabeans.min-drops"), plugin.getConfig().getInt("crops.cocoabeans.max-drops"));
+                            if (dropAmount != 0) {
+                                if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                                    Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.COCOA_BEANS, dropAmount));
+                                } else {
+                                    player.getInventory().addItem(new ItemStack(Material.COCOA_BEANS, dropAmount));
+                                }
+                            }
                         } else if (material == Material.SWEET_BERRY_BUSH && plugin.getConfig().getBoolean("crops.sweetberries.enabled")) {
                             Ageable ageable = (Ageable) block.getState().getBlockData();
                             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                                 if (ageable.getAge() == 2) {
-                                    player.getInventory().addItem(new ItemStack(Material.SWEET_BERRIES, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.sweetberries.half-grown.min-drops"), plugin.getConfig().getInt("crops.sweetberries.half-grown.max-drops"))));
+                                    int dropAmount = dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.sweetberries.half-grown.min-drops"), plugin.getConfig().getInt("crops.sweetberries.half-grown.max-drops"));
+                                    if (dropAmount != 0) {
+                                        if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                                            Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.SWEET_BERRIES, dropAmount));
+                                        } else {
+                                            player.getInventory().addItem(new ItemStack(Material.SWEET_BERRIES, dropAmount));
+                                        }
+                                    }
                                 } else {
-                                    player.getInventory().addItem(new ItemStack(Material.SWEET_BERRIES, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.sweetberries.fully-grown.min-drops"), plugin.getConfig().getInt("crops.sweetberries.fully-grown.max-drops"))));
+                                    int dropAmount = dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.sweetberries.fully-grown.min-drops"), plugin.getConfig().getInt("crops.sweetberries.fully-grown.max-drops"));
+                                    if (dropAmount != 0) {
+                                        if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                                            Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.SWEET_BERRIES, dropAmount));
+                                        } else {
+                                            player.getInventory().addItem(new ItemStack(Material.SWEET_BERRIES, dropAmount));
+                                        }
+                                    }
                                 }
                                 ageable.setAge(ageable.getAge() - 2);
                                 block.setBlockData(ageable);
@@ -122,10 +195,24 @@ public class BreakCrops {
                     kelpStack.kelpStack(player, block);
                 } else if (material == Material.MELON && plugin.getConfig().getBoolean("crops.melon.enabled")) {
                     block.setType(Material.AIR);
-                    player.getInventory().addItem(new ItemStack(Material.MELON_SLICE, dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.melon.min-drops"), plugin.getConfig().getInt("crops.melon.max-drops"))));
+                    int dropAmount = dropMath.getRandomNumberInRange(plugin.getConfig().getInt("crops.melon.min-drops"), plugin.getConfig().getInt("crops.melon.max-drops"));
+                    if (dropAmount != 0) {
+                        if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                            Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.MELON_SLICE, dropAmount));
+                        } else {
+                            player.getInventory().addItem(new ItemStack(Material.MELON_SLICE, dropAmount));
+                        }
+                    }
                 } else if (material == Material.PUMPKIN && plugin.getConfig().getBoolean("crops.pumpkin.enabled")) {
                     block.setType(Material.AIR);
-                    player.getInventory().addItem(new ItemStack(Material.PUMPKIN, plugin.getConfig().getInt("crops.pumpkin.multiplier")));
+                    int dropAmount = plugin.getConfig().getInt("crops.pumpkin.multiplier");
+                    if (dropAmount != 0) {
+                        if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                            Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.PUMPKIN, dropAmount));
+                        } else {
+                            player.getInventory().addItem(new ItemStack(Material.PUMPKIN, dropAmount));
+                        }
+                    }
                 }
             } else {
                 et.STMTCS(player, "&6RightClickFarming > &cYour inventory is full.");

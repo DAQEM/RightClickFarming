@@ -6,6 +6,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 public class BambooStack {
 
     private final RightClickFarming plugin;
@@ -30,7 +32,11 @@ public class BambooStack {
             material = block.getType();
             if (i == bambooAmount) {
                 block.setType(Material.AIR);
-                player.getInventory().addItem(new ItemStack(Material.BAMBOO, (bambooAmount + 1) * plugin.getConfig().getInt("crops.bamboo.multiplier")));
+                if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                    Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.BAMBOO, (bambooAmount + 1) * plugin.getConfig().getInt("crops.bamboo.multiplier")));
+                } else {
+                    player.getInventory().addItem(new ItemStack(Material.BAMBOO, (bambooAmount + 1) * plugin.getConfig().getInt("crops.bamboo.multiplier")));
+                }
                 return;
             }
             if (material == Material.BAMBOO) {

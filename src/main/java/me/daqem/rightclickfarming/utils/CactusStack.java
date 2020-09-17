@@ -6,6 +6,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 public class CactusStack {
 
     private final RightClickFarming plugin;
@@ -29,7 +31,11 @@ public class CactusStack {
             material = block.getType();
             if (i == caneAmount) {
                 block.setType(Material.AIR);
-                player.getInventory().addItem(new ItemStack(Material.CACTUS, (caneAmount + 1) * plugin.getConfig().getInt("crops.cactus.multiplier")));
+                if (plugin.getConfig().getBoolean("drop-items-on-ground")) {
+                    Objects.requireNonNull(block.getLocation().getWorld()).dropItem(block.getLocation(), new ItemStack(Material.CACTUS, (caneAmount + 1) * plugin.getConfig().getInt("crops.cactus.multiplier")));
+                } else {
+                    player.getInventory().addItem(new ItemStack(Material.CACTUS, (caneAmount + 1) * plugin.getConfig().getInt("crops.cactus.multiplier")));
+                }
                 return;
             }
             if (material == Material.CACTUS) {
